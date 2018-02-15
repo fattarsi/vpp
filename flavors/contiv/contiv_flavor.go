@@ -45,7 +45,7 @@ import (
 )
 
 const (
-	// ContivConfigPath is the default location of Agent's Contiv plugin. This path reflects configuration in k8s/contiv-vpp.yaml.
+	// ContivConfigPath is the default location of Agent's Contiv plugin. This path reflects configuration in k8s/contiv-vpp/templates/vpp.yaml.
 	ContivConfigPath = "/etc/agent/contiv.yaml"
 
 	// ContivConfigPathUsage explains the purpose of 'kube-config' flag.

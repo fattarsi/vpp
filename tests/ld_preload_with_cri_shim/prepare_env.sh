@@ -18,7 +18,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
-kubectl apply -f k8s/contiv-vpp.yaml
+helm install --name contiv-vpp k8s/contiv-vpp
 sleep 10
 
 sleep_time=15

@@ -18,7 +18,7 @@
 // The plugin is configurable via its config file that can be specified using
 // `-contiv-config="<path to config>` argument when running the contiv-agent. This is usually being injected
 // into the vswitch POD by a config map inside of the k8s deployment file of the contiv-VPP k8s networking plugin
-// (see contiv-agent-cfg ConfigMap in ../../k8s/contiv-vpp.yaml).
+// (see contiv-agent-cfg ConfigMap in ../../k8s/contiv-vpp/templates/vpp.yaml).
 //
 // Based on the configuration, the plugin can wire PODs in 3 different ways:
 //

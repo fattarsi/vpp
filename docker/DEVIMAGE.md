@@ -88,65 +88,11 @@ sudo docker commit --change='CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor
 supervisord by container startup, you can modify it to your needs)
 
 #### 8. Deploy the dev image
-Modify the [contiv-vpp.yaml](../k8s/contiv-vpp.yaml) file to use your dev image instead of the
-`contivvpp/vswitch` image. Also, disable the `readinessProbe` and `livenessProbe`. The example
-of the diff is below.
-
-Then deploy the network plugin using the modified YAML file:
-```
-kubectl apply -f contiv-vpp.yaml
-```
 
 ```
-diff --git a/k8s/contiv-vpp.yaml b/k8s/contiv-vpp.yaml
-index df94c82..47a40b4 100644
---- a/k8s/contiv-vpp.yaml
-+++ b/k8s/contiv-vpp.yaml
-@@ -134,7 +134,7 @@ spec:
-       initContainers:
-       # This init container extracts/copies VPP LD_PRELOAD libs and default VPP config to the host.
-       - name: vpp-init
--        image: contivvpp/vswitch
-+        image: dev-contiv-vswitch:0.0.1-424-gd1a17e5
-         imagePullPolicy: IfNotPresent
-         command:
-         - /bin/sh
-@@ -160,7 +160,7 @@ spec:
-         # Runs contiv-vswitch container on each Kubernetes node.
-         # It contains the vSwitch VPP and its management agent.
-         - name: contiv-vswitch
--          image: contivvpp/vswitch
-+          image: dev-contiv-vswitch:0.0.1-424-gd1a17e5
-           imagePullPolicy: IfNotPresent
-           securityContext:
-             privileged: true
-@@ -169,17 +169,17 @@ spec:
-             - containerPort: 5002
-             # readiness + liveness probe
-             - containerPort: 9191
--          readinessProbe:
--            httpGet:
--              path: /readiness
--              port: 9191
--            periodSeconds: 1
--          livenessProbe:
--            httpGet:
--              path: /liveness
--              port: 9191
--            periodSeconds: 1
--            initialDelaySeconds: 15
-+#          readinessProbe:
-+#            httpGet:
-+#              path: /readiness
-+#              port: 9191
-+#            periodSeconds: 1
-+#          livenessProbe:
-+#            httpGet:
-+#              path: /liveness
-+#              port: 9191
-+#            periodSeconds: 1
-+#            initialDelaySeconds: 15
-           env:
-             - name: MICROSERVICE_LABEL
-               valueFrom:
+helm install k8s/contiv-vpp \
+  --set vswitch.image.repository=dev-contiv-vswitch \
+  --set vswitch.image.tag=0.0.1-424-gd1a17e5 \
+  --set vswitch.enableLivenessReadinessProbes=false
+
 ```

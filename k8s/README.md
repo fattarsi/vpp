@@ -3,19 +3,20 @@
 This folder contains a set of files that can be used to deploy Contiv-VPP
 network plugin on Kubernetes.
 
-#### contiv-vpp.yaml
-The main deployment file that can be used to deploy Contiv-VPP network plugin using `kubeadm`:
+#### contiv-vpp helm chart
+The contiv-vpp helm chart can be used to deploy Contiv-VPP network plugin using `kubeadm`:
 ```
 # deploy
-kubectl apply -f contiv-vpp.yaml
+helm install --name contiv-vpp contiv-vpp
 
 # undeploy
-kubectl delete -f contiv-vpp.yaml
+helm delete --purge contiv-vpp
 ```
-Optionaly you can edit `contiv-vpp.yaml` to deploy the dev-contiv-vswitch image, built
-in local environment with `../docker/build-all.sh`.
+Optionally you can override configuration parameters in contiv-vpp/values.yaml to deploy the dev-contiv-vswitch image, built in local environment with `../docker/build-all.sh`.
 ```
-sed -i "s@image: contivvpp/vswitch@image: dev-contiv-vswitch:<your image version>@g" ./contiv-vpp.yaml
+helm install --name contiv-vpp \
+  --set vswitch.image.repository=dev-contiv-vswitch \
+  --set vswitch.image.tag=<your image version>
 ```
 
 To use the development image for testing with specific version of VPP, see

@@ -2,7 +2,7 @@
 //
 // The IP assignment is driven by unique node ID (uint32), that is passed to the IPAM module upon its initialization,
 // together with IPAM configuration (can be specified as IPAMConfig in contiv-agent-cfg ConfigMap
-// in ../../k8s/contiv-vpp.yaml). The contiv-agent on each node in the k8s cluster therefore does its node-local IPAM
+// in ../../k8s/contiv-vpp/values.yaml). The contiv-agent on each node in the k8s cluster therefore does its node-local IPAM
 // calculation and assignment itself, the cluster IPAM is therefore distributed between all nodes.
 //
 // The package calculates and assigns the following IP addresses:
