@@ -243,6 +243,9 @@ check_format:
 describe:
 	$(call describe_only)
 
+helm-package:
+	helm package k8s/contiv-vpp/
+
 # clean
 clean:
 	rm -f cmd/contiv-agent/contiv-agent
